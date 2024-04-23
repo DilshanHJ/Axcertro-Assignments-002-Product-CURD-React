@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -13,7 +17,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return Inertia::render('Product/All/Index', [
+            'products' => ProductResource::collection($products),
+        ]);
     }
 
     /**
@@ -21,7 +28,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return Inertia::render('Product/Create/Create', [
+            'categories' => CategoryResource::collection($categories),
+        ]);
     }
 
     /**
@@ -29,7 +39,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

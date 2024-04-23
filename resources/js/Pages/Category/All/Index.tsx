@@ -23,7 +23,7 @@ const Index = ({ auth, categories }: any) => {
                                         All available Categories
                                     </h1>
                                     <PrimaryButton
-                                        className="bg-blue-500 hover:bg-blue-700"
+                                        className=" bg-amber-500 hover:bg-amber-700"
                                         onClick={() => {
                                             router.get(
                                                 route("categories.create")

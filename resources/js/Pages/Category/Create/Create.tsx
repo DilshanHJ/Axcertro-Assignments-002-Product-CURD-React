@@ -67,7 +67,7 @@ const Create = ({ auth }: any) => {
                                     </div>
                                     <div className="w-full flex items-center justify-end">
                                         <PrimaryButton
-                                            className="bg-blue-500 hover:bg-blue-700"
+                                            className=" bg-amber-500 hover:bg-amber-600"
                                             onClick={submit}
                                         >
                                             Save
