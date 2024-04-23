@@ -21,11 +21,11 @@ const Create = ({ auth, categories }: any) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Create Product
+                    Enter New Product
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Enter New Product" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -142,7 +142,7 @@ const Create = ({ auth, categories }: any) => {
                                     </div>
                                     <div className="w-full flex items-center justify-end">
                                         <PrimaryButton
-                                            className=" bg-amber-500 hover:bg-amber-600"
+                                            className=" bg-blue-500 hover:bg-blue-700"
                                             onClick={submit}
                                         >
                                             Save

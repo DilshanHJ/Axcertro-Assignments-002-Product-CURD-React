@@ -18,11 +18,11 @@ const Edit = ({ auth, category }: any) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Categories
+                    Update Categories
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Update Categories" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -67,7 +67,7 @@ const Edit = ({ auth, category }: any) => {
                                     </div>
                                     <div className="w-full flex items-center justify-end">
                                         <PrimaryButton
-                                            className="bg-amber-500 hover:bg-amber-700"
+                                            className="bg-blue-500 hover:bg-blue-700"
                                             onClick={submit}
                                         >
                                             Update

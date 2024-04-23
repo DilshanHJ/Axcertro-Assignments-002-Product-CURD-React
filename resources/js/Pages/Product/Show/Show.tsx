@@ -8,11 +8,11 @@ const Show = ({ auth, product }: any) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Categories
+                    Product Details
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Product Details" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">

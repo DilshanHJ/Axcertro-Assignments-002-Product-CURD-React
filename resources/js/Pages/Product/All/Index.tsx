@@ -12,7 +12,7 @@ const Index = ({ auth, products }: any) => {
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Products" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -23,7 +23,7 @@ const Index = ({ auth, products }: any) => {
                                         All available products
                                     </h1>
                                     <PrimaryButton
-                                        className=" bg-amber-500 hover:bg-amber-700"
+                                        className=" bg-blue-500 hover:bg-blue-700"
                                         onClick={() => {
                                             router.get(
                                                 route("products.create")

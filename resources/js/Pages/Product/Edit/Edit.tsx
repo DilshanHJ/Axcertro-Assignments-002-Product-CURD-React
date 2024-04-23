@@ -25,7 +25,7 @@ const Edit = ({ auth, product, categories }: any) => {
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Update Product" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -142,7 +142,7 @@ const Edit = ({ auth, product, categories }: any) => {
                                     </div>
                                     <div className="w-full flex items-center justify-end">
                                         <PrimaryButton
-                                            className=" bg-amber-500 hover:bg-amber-600"
+                                            className=" bg-blue-500 hover:bg-blue-700"
                                             onClick={submit}
                                         >
                                             Update
