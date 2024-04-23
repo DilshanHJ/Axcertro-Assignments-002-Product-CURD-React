@@ -21,7 +21,7 @@ const Create = ({ auth, categories }: any) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Categories
+                    Create Product
                 </h2>
             }
         >
@@ -34,7 +34,7 @@ const Create = ({ auth, categories }: any) => {
                                 <form action="" className="space-y-6">
                                     <div>
                                         <InputLabel
-                                            value="Category Name"
+                                            value="Product Name"
                                             htmlFor="name"
                                         />
                                         <TextInput

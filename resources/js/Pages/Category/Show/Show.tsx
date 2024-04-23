@@ -24,20 +24,6 @@ const Show = ({ auth, category }: any) => {
                                 <p className="mt-2 text-sm/relaxed">
                                     {category.data.description}
                                 </p>
-                                <div className="mt-4 ">
-                                    <h3 className="text-m font-semibold text-gray-800 leading-tight">
-                                        Products:
-                                    </h3>
-                                    <ul className=" mt-2 text-sm/relaxed">
-                                        {category.data.products.map(
-                                            (product: any) => (
-                                                <li key={product.id}>
-                                                    {product.name}
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>

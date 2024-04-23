@@ -22,7 +22,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->except(['update']);
+    Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
 });
 
 Route::middleware('auth')->group(function () {

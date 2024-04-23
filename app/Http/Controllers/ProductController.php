@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::query()->paginate(10);
         return Inertia::render('Product/All/Index', [
             'products' => ProductResource::collection($products),
         ]);
@@ -39,7 +39,16 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        dd($request->all());
+
+        $data=$request->except('image');
+        $image=$request->file('image');
+        if($image){
+            $image_name=time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'),$image_name);
+            $data['image_path']='/'.'images'.'/'.$image_name;
+        }
+        $product = Product::create($data);
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -47,7 +56,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return Inertia::render('Product/Show/Show', [
+            'product' => new ProductResource($product),
+        ]);
     }
 
     /**
@@ -55,7 +66,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return Inertia::render('Product/Edit/Edit', [
+            'product' => new ProductResource($product),
+            'categories' => CategoryResource::collection($categories),
+        ]);
     }
 
     /**
@@ -63,7 +78,21 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $data = $request->except('image');
+        $image=$request->file('image');
+        if($image){
+            $image_name=time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'),$image_name);
+            $data['image_path']='/'.'images'.'/'.$image_name;
+            if($product->image_path){
+                if( file_exists(public_path($product->image_path)) ){
+                    unlink(public_path($product->image_path));
+                }
+            }
+        }
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -71,6 +100,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        if($product->image_path){
+            if( file_exists(public_path($product->image_path)) ){
+                unlink(public_path($product->image_path));
+            }
+        }
     }
 }

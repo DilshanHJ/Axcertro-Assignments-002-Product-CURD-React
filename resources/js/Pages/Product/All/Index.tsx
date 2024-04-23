@@ -34,14 +34,20 @@ const Index = ({ auth, products }: any) => {
                                     </PrimaryButton>
                                 </div>
 
-                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <table className="w-full mt-4 text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3"
                                             >
-                                                Name
+                                                Product Image
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3"
+                                            >
+                                                Product Name
                                             </th>
                                             <th
                                                 scope="col"
@@ -75,6 +81,13 @@ const Index = ({ auth, products }: any) => {
                                                 key={product.id}
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                                             >
+                                                <td className="px-6 py-4">
+                                                    <img
+                                                        className="w-20 h-20"
+                                                        src={product.image_path}
+                                                        alt=""
+                                                    />
+                                                </td>
                                                 <th
                                                     scope="row"
                                                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -85,7 +98,8 @@ const Index = ({ auth, products }: any) => {
                                                     {product.description}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {product.category.name}
+                                                    {product.category?.name ||
+                                                        "No Category"}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {product.price}
@@ -142,6 +156,22 @@ const Index = ({ auth, products }: any) => {
                                         ))}
                                     </tbody>
                                 </table>
+                                <div className="mt-4 flex justify-center w-full">
+                                    {products.meta.links.map((link: any) => (
+                                        <Link
+                                            key={link.label}
+                                            href={link.url}
+                                            className={
+                                                link.active
+                                                    ? "px-4 py-2 text-blue-500"
+                                                    : "px-4 py-2 text-blue-500"
+                                            }
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
+                                        ></Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
