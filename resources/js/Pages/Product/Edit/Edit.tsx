@@ -3,6 +3,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
+import React from "react";
+import Dropzone from "react-dropzone";
 
 const Edit = ({ auth, product, categories }: any) => {
     const { data, setData, post }: any = useForm({
@@ -118,7 +120,7 @@ const Edit = ({ auth, product, categories }: any) => {
                                             )}
                                         </select>
                                     </div>
-                                    <div>
+                                    <div style={{ display: "none" }}>
                                         <InputLabel
                                             value="Product Image"
                                             htmlFor="image"
@@ -139,6 +141,72 @@ const Edit = ({ auth, product, categories }: any) => {
                                                 border: "1px solid #d1d5db",
                                             }}
                                         />
+                                    </div>
+                                    <div>
+                                        <InputLabel
+                                            value="Product Image"
+                                            htmlFor="image2"
+                                        />
+                                        <Dropzone
+                                            onDrop={(acceptedFiles) => {
+                                                setData(
+                                                    "image",
+                                                    acceptedFiles[0]
+                                                );
+                                                console.log(data);
+                                            }}
+                                        >
+                                            {({
+                                                getRootProps,
+                                                getInputProps,
+                                            }) => (
+                                                <section>
+                                                    <div
+                                                        style={{
+                                                            border: "1px solid #d1d5db",
+                                                            borderRadius: "5px",
+                                                            padding: "20px",
+                                                            width: "100%",
+                                                            height: "200px",
+                                                            display: "flex",
+                                                            flexDirection:
+                                                                "column",
+                                                            justifyContent:
+                                                                "center",
+                                                            alignItems:
+                                                                "center",
+                                                        }}
+                                                        {...getRootProps()}
+                                                    >
+                                                        <input
+                                                            {...getInputProps()}
+                                                        />
+                                                        <div className="text-center">
+                                                            {data.image ? (
+                                                                <div className="w-full h-full flex flex-col justify-center items-center">
+                                                                    <img
+                                                                        className="max-h-[150px]"
+                                                                        src={URL.createObjectURL(
+                                                                            data.image
+                                                                        )}
+                                                                        alt=""
+                                                                    />
+                                                                    <p className="text-center">
+                                                                        {
+                                                                            data
+                                                                                .image
+                                                                                .name
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            ) : (
+                                                                "Drag and drop an image here or click to select an image"
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </Dropzone>
                                     </div>
                                     <div className="w-full flex items-center justify-end">
                                         <PrimaryButton
