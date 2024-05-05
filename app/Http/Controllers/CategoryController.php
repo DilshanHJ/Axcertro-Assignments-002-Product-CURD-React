@@ -6,17 +6,24 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Repositories\All\Category\CategoryInterface;
 use Illuminate\Routing\Route;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    protected $categoryInterface;
+    public function __construct(
+        CategoryInterface $categoryInterface
+    ){
+        $this->categoryInterface = $categoryInterface;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->categoryInterface->all();
         return Inertia::render('Category/All/Index', [
             'categories' => CategoryResource::collection($categories),
         ]);
@@ -35,8 +42,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $data = $request->all();
-        Category::create($data);
+        $this->categoryInterface->create($request->all());
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
@@ -65,8 +71,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $data = $request->all();
-        $category->update($data);
+        $this->categoryInterface->update($category->id, $request->all());
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
@@ -75,7 +80,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->categoryInterface->deleteById($category->id);
         return redirect()->route('categories.index');
     }
 }

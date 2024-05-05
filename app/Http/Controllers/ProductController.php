@@ -8,16 +8,28 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\All\Category\CategoryInterface;
+use App\Repositories\All\Product\ProductInterface;
+use App\Services\ProductServices\ProductServices;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    protected $productInterface;
+    protected $productServices;
+    public function __construct(
+        ProductInterface $productInterface,
+        ProductServices $productServices
+    ){
+        $this->productInterface = $productInterface;
+        $this->productServices = $productServices;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::query()->paginate(10);
+        $products = $this->productInterface->paginate(10);
         return Inertia::render('Product/All/Index', [
             'products' => ProductResource::collection($products),
         ]);
@@ -28,7 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+
+        $categories = app()->make(CategoryInterface::class)->all();
         return Inertia::render('Product/Create/Create', [
             'categories' => CategoryResource::collection($categories),
         ]);
@@ -40,14 +53,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
 
-        $data=$request->except('image');
-        $image=$request->file('image');
-        if($image){
-            $image_name=time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('images'),$image_name);
-            $data['image_path']='/'.'images'.'/'.$image_name;
-        }
-        $product = Product::create($data);
+        $this->productServices->storeProduct($request);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
@@ -66,7 +72,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $categories = app()->make(CategoryInterface::class)->all();
         return Inertia::render('Product/Edit/Edit', [
             'product' => new ProductResource($product),
             'categories' => CategoryResource::collection($categories),
@@ -78,20 +84,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $data = $request->except('image');
-        $image=$request->file('image');
-        if($image){
-            $image_name=time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('images'),$image_name);
-            $data['image_path']='/'.'images'.'/'.$image_name;
-            if($product->image_path){
-                if( file_exists(public_path($product->image_path)) ){
-                    unlink(public_path($product->image_path));
-                }
-            }
-        }
-        $product->update($data);
-
+        $this->productServices->updateProduct($request, $product);
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
@@ -100,11 +93,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-        if($product->image_path){
-            if( file_exists(public_path($product->image_path)) ){
-                unlink(public_path($product->image_path));
-            }
-        }
+        $this->productServices->destroyProduct($product);
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }
